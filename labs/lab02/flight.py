@@ -30,7 +30,7 @@ marker_deck_ids = [51, 52, 53, 54]
 # -- MAY CHANGE FROM FLIGHT TO FLIGHT --
 
 # Specify whether or not to use the motion capture system
-use_mocap = False
+use_mocap = True
 
 # Specify whether or not to use a custom controller
 use_controller = False
@@ -111,14 +111,15 @@ try:
     drone_client.arm()
 
     # Pause before takeoff
-    drone_client.stop(1.0)
+    drone_client.stop(5.0)
 
-    drone_client.move(0.0, 0.0, 0.5, 0.0, 3.0)  # take off and hover at a height of 0.5 meters
-    drone_client.move(0.2, 0.0, 0.5, 0.0, 3.0)  # move 0.2 meters forward
-    drone_client.move(0.2, 0.2, 0.5, 0.0, 3.0)  # move 0.2 meters left
-    drone_client.move(0.0, 0.2, 0.5, 0.0, 3.0)  # move 0.2 meters back
-    drone_client.move(0.0, 0.0, 0.5, 0.0, 3.0)  # move 0.2 meters right
-    drone_client.move(0.0, 0.0, 0.1, 0.0, 1.0)  # prepare for landing from a height of 0.1 meters
+    # drone_client.move(0.0, 0.0, 0.5, 0.0, 3.0)  # take off and hover at a height of 0.5 meters
+    # for i in range(4):
+    #     drone_client.move(0.2, 0.0, 0.5, 0.0, 3.0)  # move 0.2 meters forward
+    #     drone_client.move(0.2, 0.2, 0.5, 0.0, 3.0)  # move 0.2 meters left
+    #     drone_client.move(0.0, 0.2, 0.5, 0.0, 3.0)  # move 0.2 meters back
+    #     drone_client.move(0.0, 0.0, 0.5, 0.0, 3.0)  # move 0.2 meters right
+    # drone_client.move(0.0, 0.0, 0.1, 0.0, 1.0)  # prepare for landing from a height of 0.1 meters
 
     # Pause after landing
     drone_client.stop(1.0)
@@ -162,5 +163,3 @@ finally:
         json.dump(data, outfile, sort_keys=False)
     os.replace(temporary_filename, data_filename)
     print(f'Wrote flight data to {data_filename}')
-
-    # uv run ae483-reboot "radio://0/59/2M/E7E7E7E7E7"

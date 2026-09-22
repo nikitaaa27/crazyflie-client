@@ -51,9 +51,12 @@ variables = [
     'stateEstimate.x',
     'stateEstimate.y',
     'stateEstimate.z',
-    'stateEstimate.yaw',
-    'stateEstimate.pitch',
     'stateEstimate.roll',
+    'stateEstimate.pitch',
+    'stateEstimate.yaw',
+    'gyro.x',
+    'gyro.y',
+    'gyro.z',
 ]
 
 
@@ -108,20 +111,20 @@ try:
     # Arm the drone. Brushless drones will not spin their motors until they are
     # armed. Brushed drones do not need to be armed, but arming them does no
     # harm, so the same flight code works for both.
-    drone_client.arm()
+    # drone_client.arm()
 
     # Pause before takeoff
-    drone_client.stop(1.0)
+    drone_client.stop(3.0)
 
-    drone_client.move(0.0, 0.0, 0.5, 0.0, 3.0)  # take off and hover at a height of 0.5 meters
-    drone_client.move(0.2, 0.0, 0.5, 0.0, 3.0)  # move 0.2 meters forward
-    drone_client.move(0.2, 0.2, 0.5, 0.0, 3.0)  # move 0.2 meters left
-    drone_client.move(0.0, 0.2, 0.5, 0.0, 3.0)  # move 0.2 meters back
-    drone_client.move(0.0, 0.0, 0.5, 0.0, 3.0)  # move 0.2 meters right
-    drone_client.move(0.0, 0.0, 0.1, 0.0, 1.0)  # prepare for landing from a height of 0.1 meters
+    # drone_client.move(0.0, 0.0, 0.5, 0.0, 3.0)  # take off and hover at a height of 0.5 meters
+    # drone_client.move(0.2, 0.0, 0.5, 0.0, 3.0)  # move 0.2 meters forward
+    # drone_client.move(0.2, 0.2, 0.5, 0.0, 3.0)  # move 0.2 meters left
+    # drone_client.move(0.0, 0.2, 0.5, 0.0, 3.0)  # move 0.2 meters back
+    # drone_client.move(0.0, 0.0, 0.5, 0.0, 3.0)  # move 0.2 meters right
+    # drone_client.move(0.0, 0.0, 0.1, 0.0, 1.0)  # prepare for landing from a height of 0.1 meters
 
     # Pause after landing
-    drone_client.stop(1.0)
+    drone_client.stop(3.0)
 
 except KeyboardInterrupt:
     print('\nInterrupted - stopping the motors and saving whatever data were collected.')
