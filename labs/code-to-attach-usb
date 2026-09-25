@@ -1,0 +1,4 @@
+usbipd.exe attach -w -i 1915:7777 --auto-attach
+
+drone-usb
+^ alias
