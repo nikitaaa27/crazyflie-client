@@ -127,22 +127,22 @@ try:
     drone_client.move(0.0, 0.0, 0.35, 0.0, 1.0)
     drone_client.move(0.0, 0.0, 0.50, 0.0, 2.0)
 
-    # # Test #1
-    # hover_height = 0.50
-    # increment = 0.01
-    # for i in range(0, 10):
-    #     displacement = increment * i + 0.01
+    # Test #1
+    hover_height = 0.50
+    increment = 0.01
+    for i in range(0, 10):
+        displacement = increment * i + 0.01
 
-    #     print(f"Test #{i}: ±{displacement:.2f} m")
+        print(f"Test #{i}: ±{displacement:.2f} m")
 
-    #     # Move up
-    #     drone_client.move(0.0, 0.0, hover_height + displacement, 0.0, 2.0)
+        # Move up
+        drone_client.move(0.0, 0.0, hover_height + displacement, 0.0, 2.0)
 
-    #     # Move down
-    #     drone_client.move(0.0, 0.0, hover_height - displacement, 0.0, 2.0)
+        # Move down
+        drone_client.move(0.0, 0.0, hover_height - displacement, 0.0, 2.0)
 
-    #     # Return to hover
-    #     drone_client.move(0.0, 0.0, hover_height, 0.0, 2.0)
+        # Return to hover
+        drone_client.move(0.0, 0.0, hover_height, 0.0, 2.0)
 
     
 
