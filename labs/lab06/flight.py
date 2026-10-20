@@ -33,7 +33,7 @@ marker_deck_ids = [51, 52, 53, 54]
 use_mocap = False
 
 # Specify whether or not to use a custom controller
-use_controller = False
+use_controller = True
 
 # Specify whether or not to use a custom observer
 use_observer = False
