@@ -3,6 +3,8 @@
 
 import json
 import os
+import time
+import numpy as np
 from ae483.clients import QualisysClient
 from ae483.myclients import MyCrazyflieClient
 
@@ -83,6 +85,10 @@ variables = [
     'ae483log.m_2',
     'ae483log.m_3',
     'ae483log.m_4',
+    # Battery information
+    'pm.vbat',
+    'pm.state',
+    'pm.batteryLevel',
 ]
 
 
@@ -123,6 +129,25 @@ try:
     # estimate has had time to converge
     drone_client.wait_until_ready()
 
+    # Read the battery at rest, before arming or sending flight commands.
+    battery_deadline = time.monotonic() + 5.0
+    while not drone_client.data.get('pm.vbat', {}).get('data'):
+        if time.monotonic() >= battery_deadline:
+            raise RuntimeError('No battery voltage received before flight.')
+        time.sleep(0.05)
+    battery_voltage = drone_client.data['pm.vbat']['data'][-1]
+    # Interpolate the announcement's charge curve. Clamp to its supplied
+    # 0–90% range rather than inventing a voltage for 100% charge.
+    battery_percentage = np.interp(
+        battery_voltage,
+        [3.00, 3.78, 3.83, 3.87, 3.89, 3.92, 3.96, 4.00, 4.04, 4.10],
+        [0, 10, 20, 30, 40, 50, 60, 70, 80, 90],
+    )
+    print(
+        f'Preflight battery: {battery_voltage:.2f} V, '
+        f'{battery_percentage:.1f}%'
+    )
+
     # Send the control gains to the drone and confirm they arrived. This does
     # nothing if gains is None. It happens before the motion capture system is
     # started so that as little time as possible passes between the start of
@@ -140,7 +165,7 @@ try:
     # drone_client.arm()
 
     # Pause before takeoff
-    drone_client.stop(3.0)
+    drone_client.stop(1.0)
 
     # Graceful takeoff
     drone_client.move(0.0, 0.0, 0.20, 0.0, 1.0)
@@ -156,7 +181,7 @@ try:
     drone_client.move(0.0, 0.0, 0.20, 0.0, 1.0)
     
     # Pause after landing
-    drone_client.stop(3.0)
+    drone_client.stop(1.0)
 
 except KeyboardInterrupt:
     print('\nInterrupted - stopping the motors and saving whatever data were collected.')
